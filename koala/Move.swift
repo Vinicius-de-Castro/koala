@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-enum moveType {
-    case stretch
-    case kegel
-}
-
-enum Intensity {
-    case light
-    case moderate
-    case intense
-}
-
 class Move {
     let name: String
     let description: String
