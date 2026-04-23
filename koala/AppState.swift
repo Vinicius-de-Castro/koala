@@ -4,10 +4,10 @@
 //
 //  Created by User on 23/04/26.
 //
-
 import Observation
 
-@Observable class Memory {
+@Observable
+class Memory {
     var moves: [Move] = [
         Move(
             name: "Elevação de joelhos",
@@ -28,6 +28,7 @@ import Observation
                     "Manhã", "Leve"
                 ],
                 moveset: []
+                
                )
     ]
 }

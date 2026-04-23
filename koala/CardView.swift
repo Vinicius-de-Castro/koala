@@ -8,22 +8,42 @@
 import SwiftUI
 
 struct CardView: View {
+    
+    @State var test: moveType
+    
+    @State var bgColor: Color = Color.white
+    
     var body: some View {
+        
+//        switch test {
+//        case .stretch:
+//            bgColor = Color.purple
+//        case .kegel:
+//            bgColor = Color.purple
+//        }
+        
         ZStack{
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
+                .fill((test == .kegel) ? Color.purple : Color.green)
                 .shadow(radius: 8)
             HStack {
+                VStack (
+                    alignment: .leading
+                ){
+                    Text("Alongamento tal")
+                    Spacer()
+                    Text("Duração")
+                    Text("Mais algo")
+                }
+                Spacer()
                 Image(systemName: "person.fill")
                     .resizable(resizingMode: .tile)
                     .frame(width: 80, height: 80, alignment: .center)
                     .padding()
-                Text("Name")
-                Spacer()
-                Text("Duration")
             }
             .padding()
             Spacer()
+            
         }
         .frame(maxHeight: 10)
         .padding()
@@ -31,5 +51,5 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView()
+    CardView(test: moveType.stretch)
 }
