@@ -9,22 +9,16 @@ import SwiftUI
 
 struct CardView: View {
     
-    @State var test: moveType
+    @State var thisRoutine: Routine
     
-    @State var bgColor: Color = Color.white
+    @State var thisType: moveType = thisRoutine.type
+    
+    @State var bgColor: Color = ((thisRoutine.type == .kegel) ? Color.purple : Color.green)
     
     var body: some View {
-        
-//        switch test {
-//        case .stretch:
-//            bgColor = Color.purple
-//        case .kegel:
-//            bgColor = Color.purple
-//        }
-        
         ZStack{
             RoundedRectangle(cornerRadius: 16)
-                .fill((test == .kegel) ? Color.purple : Color.green)
+                .fill(bgColor)
                 .shadow(radius: 8)
             HStack {
                 VStack (
@@ -48,8 +42,4 @@ struct CardView: View {
         .frame(maxHeight: 10)
         .padding()
     }
-}
-
-#Preview {
-    CardView(test: moveType.stretch)
 }
