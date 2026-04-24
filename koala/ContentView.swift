@@ -11,7 +11,7 @@ struct ContentView: View {
     var body: some View {
         TabView {
             Tab("Home", systemImage: "circle.fill") {
-                HomeView()
+                HomeView(recomendedRoutine: Memory.routines["MORNING_ROUTINE"]!)
             }
             Tab("Kegel", systemImage: "circle.fill") {
                 KegelView()

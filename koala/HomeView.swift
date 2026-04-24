@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @State var recomendedRoutine: Routine
+    
     var body: some View {
         VStack{
             Text("Home")
-            CardView(thisRoutine: Memory.routines["MORNING_ROUTINE"] ?? Memory.routines["DEFAULT"]!)
+            CardView(thisRoutine: recomendedRoutine)
         }
     }
 }
 
 #Preview {
-    HomeView()
+    HomeView(
+        recomendedRoutine: Memory.routines["MORNING_ROUTINE"]!
+    )
 }

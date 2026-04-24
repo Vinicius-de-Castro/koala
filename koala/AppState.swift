@@ -14,7 +14,7 @@ struct Memory {
             type: .stretch,
             level: .light,
             pattern: nil,
-            illustration: nil
+            image: "DefaultStretch"
         ),
         "KNEE_UP" : Move(
             name: "Elevação de joelhos",
@@ -23,19 +23,20 @@ struct Memory {
             type: .stretch,
             level: .light,
             pattern: nil,
-            illustration: nil
+            image: "DefaultStretch"
         )
     ]
     static let routines: [String : Routine] = [
         "DEFAULT" : Routine(
             name: "ROTINA PADRÃO",
             description: "ALGUM ERRO ACONTECEU",
-            type: .stretch,
+            type: .kegel,
             level: .light,
             tags: [],
             moveset: [
                 moves["DEFAULT"]!
-            ]
+            ], 
+            image: "DefaultStretch"
         ),
         
         "MORNING_ROUTINE" : Routine(
@@ -48,7 +49,8 @@ struct Memory {
             ],
             moveset: [
                 moves["KNEE_UP"]!
-            ]
+            ], 
+            image: "DefaultStretch"
         )
     ]
 }

@@ -17,15 +17,15 @@ class Move {
     
     let tags: [String] = []
     let pattern: [Int]? // kegel-only
-    let illustration: Image? //stretch-only
+    let image: String // Image-code
     
-    init(name: String, description: String, lenght: Int, type: moveType, level: Intensity, pattern: [Int]?, illustration: Image?) {
+    init(name: String, description: String, lenght: Int, type: moveType, level: Intensity, pattern: [Int]?, image: String) {
         self.name = name
         self.description = description
         self.lenght = lenght
         self.type = type
         self.level = level
         self.pattern = pattern
-        self.illustration = illustration
+        self.image = image
     }
 }
