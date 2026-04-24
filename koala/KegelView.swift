@@ -9,19 +9,18 @@ import SwiftUI
 
 struct KegelView: View {
     
-    @State var recomendedRoutine: Routine
-    
     var body: some View {
-        List {
+        Text("Rotinas de Kegel")
+            .font(.system(size: 22, weight: .bold))
+        ScrollView {
             ForEach(Array(Memory.routines.keys), id: \.self) { key in
                 CardView(thisRoutine: Memory.routines[key]!)
+                    .frame(height: 150)
             }
         }
     }
 }
 
 #Preview {
-    KegelView(
-        recomendedRoutine: Memory.routines["MORNING_ROUTINE"]!
-    )
+    KegelView()
 }
