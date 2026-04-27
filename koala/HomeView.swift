@@ -14,6 +14,7 @@ struct HomeView: View {
             CarrouselView()
             CardView(thisRoutine: Memory.routines["MORNING_ROUTINE"]!)
                 .frame(height: 150)
+            Spacer()
         }
     }
 }

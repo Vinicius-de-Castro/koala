@@ -35,7 +35,7 @@ struct Memory {
             tags: [],
             moveset: [
                 moves["DEFAULT"]!
-            ], 
+            ],
             image: "DefaultStretch"
         ),
         
@@ -49,7 +49,7 @@ struct Memory {
             ],
             moveset: [
                 moves["KNEE_UP"]!
-            ], 
+            ],
             image: "DefaultStretch"
         )
     ]

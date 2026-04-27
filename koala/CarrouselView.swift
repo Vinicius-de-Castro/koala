@@ -8,20 +8,41 @@
 import SwiftUI
 
 struct CarrouselView: View {
-    
+    @State var cards: [CarrouselCard] = [CarrouselCard(), CarrouselCard(), CarrouselCard(), CarrouselCard()]
+    @State var activeCard: CarrouselCard?
     var body: some View {
-        ScrollView (.horizontal) {
-            HStack {
-                ForEach(0..<10) {_ in 
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.green)
-                        .frame(width: 350, height: 300)
+        ZStack {
+            VStack {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(cards, id: \.self) { card in
+                            CarrouselCard()
+                        }
+                        .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                    }
+                    .scrollTargetLayout()
+                    
                 }
+                .scrollIndicators(.never)
+                .scrollTargetBehavior(.viewAligned)
+                .scrollPosition(id: $activeCard)
+                
+                HStack {
+                    ForEach(cards) {card in
+                        Button {
+                            withAnimation {
+                                activeCard = card
+                            }
+                        } label: {
+                            Image(systemName: "circle.fill")
+                                .foregroundStyle(Color(uiColor: .systemGray3))
+                                .opacity(activeCard == card ? 1 : 0.3)
+                        }
+                    }
+                }
+                .padding()
             }
-            .scrollTargetLayout()
+            .ignoresSafeArea(edges: .top)
         }
-        .scrollIndicators(.hidden)
-        .scrollTargetBehavior(.paging)
-        .padding()
     }
 }
