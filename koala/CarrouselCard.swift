@@ -8,34 +8,57 @@
 import SwiftUI
 
 struct CarrouselCard: View, Hashable, Identifiable {
+    var image: String
+    var subtitle: String
+    var title: String
+    var button: String
     var id = UUID()
-    var cardColor: Color? = .green
+    var cardColor: Color? = .stretchGreen
+    
+    var screenHeight = UIScreen.main.bounds.size.height
     
     var body: some View {
-        ZStack {
-            Color.green
-            Image("DefaultStretch")
+        ZStack(alignment: .bottom) {
+//            Color.stretchGreen
+//                .ignoresSafeArea()
+            
+            Image(image)
                 .resizable()
-                .scaledToFit()
-            Rectangle().fill(LinearGradient(gradient: Gradient(colors: [.white .opacity(0), .white .opacity(0.1), .white]), startPoint: .top, endPoint: .bottom))
+                .scaledToFill()
+                .frame(maxWidth: .infinity)
+                .frame(height: screenHeight*0.7, alignment: .center)
+                .ignoresSafeArea()
+                .clipped()
+                .containerRelativeFrame(.horizontal)
+                
+            
+            Rectangle()
+                .fill(LinearGradient(gradient: Gradient(colors: [.white .opacity(0), .white .opacity(0.6), .white]), startPoint: .top, endPoint: .bottom))
+                .ignoresSafeArea()
+            
             VStack {
                 Spacer()
-                Text("SUGESTÃO DO DIA")
-                    .font(.system(size: 18))
-                Text("Kegel Matinal")
-                    .font(.system(size: 30, weight: .bold))
-                Button("Conferir exercícios") {
+                
+                Text(subtitle)
+                    .font(.title)
+                    .fontWeight(.medium)
+                    .padding(-5)
+                    .foregroundStyle(.kegelPurple)
+                Text(title)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                Button(button) {
                     print("Button pressed!")
                 }
                 .padding()
-                .background(.green)
+                .background(.stretchGreen)
                 .tint(Color.white)
                 .clipShape(Capsule())
             }
             .padding()
             .padding(.bottom)
-//            .background(.blue)
         }
-        .frame(maxWidth: .infinity, maxHeight: 600)
+        .padding(.bottom, 100)
+
     }
 }

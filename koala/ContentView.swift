@@ -10,13 +10,13 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Tab("Home", systemImage: "circle.fill") {
+            Tab("Home", systemImage: "house.fill") {
                 HomeView()
             }
-            Tab("Kegel", systemImage: "circle.fill") {
+            Tab("Kegel", systemImage: "figure.mind.and.body") {
                 KegelView()
             }
-            Tab("Alongamentos", systemImage: "circle.fill") {
+            Tab("Alongamentos", systemImage: "figure.strengthtraining.functional") {
                 StretchView()
             }
         }
