@@ -19,6 +19,9 @@ struct ContentView: View {
             Tab("Alongamentos", systemImage: "circle.fill") {
                 StretchView()
             }
+            //Tab("KegelTeste",systemImage: "circle.fill"){
+              //  KegelShape(fraction: <#T##Double#>, primatyText: <#T##String#>, secondText: <#T##String#>)
+            //}
         }
     }
 }
