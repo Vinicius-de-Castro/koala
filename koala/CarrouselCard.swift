@@ -16,6 +16,7 @@ struct CarrouselCard: View, Hashable, Identifiable {
     var cardColor: Color? = .stretchGreen
     
     var screenHeight = UIScreen.main.bounds.size.height
+    var screenWidth = UIScreen.main.bounds.size.width
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -26,7 +27,7 @@ struct CarrouselCard: View, Hashable, Identifiable {
                 .resizable()
                 .scaledToFill()
                 .frame(maxWidth: .infinity)
-                .frame(height: screenHeight*0.7, alignment: .center)
+                .frame(width: screenWidth, height: screenHeight*0.7, alignment: .center)
                 .ignoresSafeArea()
                 .clipped()
                 .containerRelativeFrame(.horizontal)

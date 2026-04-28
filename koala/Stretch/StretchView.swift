@@ -9,12 +9,12 @@ import SwiftUI
 
 struct StretchView: View {
     var body: some View {
-        Text("Rotinas de Alongamento")
-            .font(.system(size: 22, weight: .bold))
         ScrollView {
             ForEach(Array(Memory.routines.keys), id: \.self) { key in
-                CardView(thisRoutine: Memory.routines[key]!)
-                    .frame(height: 150)
+                if Memory.routines[key]?.type == .stretch {
+                    CardView(thisRoutine: Memory.routines[key]!)
+                        .padding(.horizontal)
+                }
             }
         }
     }

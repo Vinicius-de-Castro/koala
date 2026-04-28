@@ -5,7 +5,10 @@
 //  Created by User on 23/04/26.
 //
 
-class Routine {
+import Foundation
+
+class Routine: Identifiable, Hashable, Equatable {
+    let id: UUID = UUID()
     let name: String
     let description: String
     var length: Int
@@ -33,4 +36,12 @@ class Routine {
             count+=1
         }
     }
+    
+    static func ==(lhs: Routine, rhs: Routine) -> Bool {
+       return lhs.id == rhs.id
+   }
+
+   func hash(into hasher: inout Hasher) {
+       hasher.combine(id)
+   }
 }
