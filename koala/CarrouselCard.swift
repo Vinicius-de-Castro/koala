@@ -7,59 +7,83 @@
 
 import SwiftUI
 
-struct CarrouselCard: View, Hashable, Identifiable {
+struct CarrouselCard: View{
+    
+    @State var selectedRoutine: Routine?
+    
+    var routine: Routine
+    
     var image: String
+    
     var subtitle: String
+    
     var title: String
+    
     var button: String
+    
     var id = UUID()
-    var cardColor: Color? = .stretchGreen
+    
+    var cardColor: Color {
+        return (routine.type == .kegel ? .kegelPurple : .stretchGreen)
+    }
     
     var screenHeight = UIScreen.main.bounds.size.height
+    
     var screenWidth = UIScreen.main.bounds.size.width
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-//            Color.stretchGreen
-//                .ignoresSafeArea()
-            
-            Image(image)
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
-                .frame(width: screenWidth, height: screenHeight*0.7, alignment: .center)
-                .ignoresSafeArea()
-                .clipped()
-                .containerRelativeFrame(.horizontal)
+        
+        NavigationStack {
+            ZStack(alignment: .bottom) {
+                //            Color.stretchGreen
+                //                .ignoresSafeArea()
                 
-            
-            Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: [.white .opacity(0), .white .opacity(0.6), .white]), startPoint: .top, endPoint: .bottom))
-                .ignoresSafeArea()
-            
-            VStack {
-                Spacer()
+                Image(image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .frame(width: screenWidth, height: screenHeight*0.7, alignment: .center)
+                    .ignoresSafeArea()
+                    .clipped()
+                    .containerRelativeFrame(.horizontal)
                 
-                Text(subtitle)
-                    .font(.title)
-                    .fontWeight(.medium)
-                    .padding(-5)
-                    .foregroundStyle(.kegelPurple)
-                Text(title)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Button(button) {
-                    print("Button pressed!")
+                
+                Rectangle()
+                    .fill(LinearGradient(gradient: Gradient(colors: [.white .opacity(0), .white .opacity(0.6), .white]), startPoint: .top, endPoint: .bottom))
+                    .ignoresSafeArea()
+                
+                VStack {
+                    Spacer()
+                    
+                    Text(subtitle)
+                        .font(.title)
+                        .fontWeight(.medium)
+                        .padding(-5)
+                        .foregroundStyle(.kegelPurple)
+                    Text(title)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Button(button) {
+                        selectedRoutine = routine
+                    }
+                    .padding()
+                    .background(.stretchGreen)
+                    .tint(Color.white)
+                    .clipShape(Capsule())
                 }
                 .padding()
-                .background(.stretchGreen)
-                .tint(Color.white)
-                .clipShape(Capsule())
+                .padding(.bottom)
             }
-            .padding()
-            .padding(.bottom)
+            .padding(.bottom, 100)
         }
-        .padding(.bottom, 100)
-
+        .navigationDestination(item: $selectedRoutine){ _ in
+            if (routine.type == .stretch){
+                StretchDetailView(routine: routine)
+            }
+            else {
+                // 
+            }
+        }
+        
     }
 }

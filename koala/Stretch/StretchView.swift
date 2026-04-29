@@ -24,7 +24,6 @@ struct StretchView: View {
                         CardView(thisRoutine: Memory.routines[key]!)
                             .padding(.horizontal)
                             .onTapGesture {
-                                print("Teste")
                                 selectedRoutine = Memory.routines[key]
                             }
                     }
