@@ -26,6 +26,9 @@ struct StretchRoutineView: View {
     }
     
     var timeRemaining: Int {
+        if isUserResting {
+            return 30
+        }
         if let time = currentMove?.lenght {
             return time
         }
@@ -36,12 +39,14 @@ struct StretchRoutineView: View {
         
         let bgColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchGreen)
         
+        var displayTime = timeRemaining - timerElapsed
+        
         ZStack {
             Rectangle()
                 .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.2), bgColor]), startPoint: .top, endPoint: .bottom))
                 .ignoresSafeArea()
             VStack {
-                Text("\((timeRemaining - timerElapsed)/60):\((timeRemaining - timerElapsed)%60)")
+                Text("\(displayTime/60):" + String(format: "%02d", displayTime%60))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
@@ -105,14 +110,11 @@ struct StretchRoutineView: View {
                 startTimer()
             }
             .onChange(of: timerElapsed) { _, _ in
-                if timerElapsed == currentMove?.lenght {
+                if timerElapsed == timeRemaining {
                     timerElapsed = 0
                     isUserResting = !isUserResting
                     if isUserResting {
                         currentMoveSetIndex += 1
-                    }
-                    else {
-                        
                     }
                 }
             }
@@ -123,7 +125,7 @@ struct StretchRoutineView: View {
     func startTimer() {
         isTimerRunning = true
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
-            timerElapsed += 2
+            timerElapsed += 1
         }
         
     }
