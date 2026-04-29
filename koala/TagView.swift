@@ -15,7 +15,7 @@ struct TagView: View {
     
     var body: some View {
         
-        var moveColor: Color = (type == .kegel ? .kegelPurple : .stretchGreen)
+        let moveColor: Color = (type == .kegel ? .kegelPurple : .stretchGreen)
         
         Text(tag)
             .font(.title3)
