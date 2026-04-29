@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var selectedRoutine: Routine?
     
     var body: some View {
-        VStack{
-            CarrouselView()
-            CardView(thisRoutine: Memory.routines["MORNING_ROUTINE"]!)
+        NavigationStack {
+            VStack{
+                CarrouselView()
+                CardView(
+                    thisRoutine: Memory.routines["MORNING_STRETCH"]!
+                )
+                .onTapGesture {
+                    selectedRoutine = Memory.routines["MORNING_STRETCH"]!
+                }
                 .frame(height: 150)
-            Spacer()
+                .padding()
+                Spacer()
+            }
+            .navigationDestination(item: $selectedRoutine) { routine in
+                StretchDetailView(routine: routine)
+            }
         }
     }
 }

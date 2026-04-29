@@ -12,71 +12,80 @@ struct CardView: View {
     @State var thisRoutine: Routine
     
     var body: some View {
-        
-        let bgColor: Color = ((thisRoutine.type == .kegel) ? Color.purple : Color.green)
+        let bgColor: Color = ((thisRoutine.type == .kegel) ? .kegelPurple : .stretchGreen)
         let title = thisRoutine.name
         let length = thisRoutine.length
         let count = thisRoutine.count
         let image = thisRoutine.image
         
-        ZStack{
-            RoundedRectangle(cornerRadius: 16)
-                .fill(bgColor)
+        HStack {
+            //textos
+            VStack (
+                alignment: .leading,
+                spacing: 4
+            ){
+                
+                Text(title)
+                    .font(.title)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(Color.white)
+                    .frame(maxWidth: 200, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer()
+                
+                //tags
                 HStack {
-                    Spacer()
-                    Image(image)
-                        .resizable(resizingMode: .stretch)
-                        .frame(width: 150, height: 150)
-                        .padding([.trailing], 50)
+                    Image(systemName: "clock.fill")
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: 30)
+                    Text(String(Int(length/60)) + (Int(length/60) > 1 ? " minutos" : " minuto"))
+                        .font(.title2)
+                        .foregroundColor(Color.white)
                 }
-            
-            HStack {
-                VStack (
-                    alignment: .leading,
-                    spacing: 4
-                ){
-                    Text(title)
-                        .font(.system(size: 22, weight: .bold))
-                        .frame(width: 200)
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(Color.white)
-                        .lineLimit(2)
-                    Spacer()
-                    Text(String(Int(length/60)) + " minutos")
-                        .font(.system(size: 22, weight: .medium))
-                        .foregroundColor(Color.white)
+                HStack{
+                    Image(systemName: "dumbbell.fill")
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: 30)
                     Text(String(count) + " exercícios")
-                        .font(.system(size: 22, weight: .medium))
+                        .font(.title2)
                         .foregroundColor(Color.white)
                 }
-                Spacer()
             }
-            .padding()
-            Spacer()
-            VStack {
-                HStack {
-                    Spacer()
-                    ZStack (
-                        alignment: .center
-                    ){
-                        Circle()
-                            .fill(Color.gray)
-                            .frame(width: 60)
-                            .opacity(0.5)
-                        Image(systemName: "chevron.right")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
-                            .foregroundStyle(Color.white)
-                    }
-                    .opacity(0.9)
-                }
-                Spacer()
-            }
-            .padding(20)
             
+            
+            Image(image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 150, height: 150)
         }
-        .frame(maxHeight: 10)
         .padding()
+        .frame(height: 180)
+        .background(bgColor)
+        .overlay(alignment: .topTrailing) {
+            ZStack (
+                alignment: .center
+            ){
+                Circle()
+                    .fill(Color.gray)
+                    .frame(width: 48)
+                    .opacity(0.3)
+                    .blendMode(.colorBurn)
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundStyle(Color.white)
+                    .clipped()
+            }
+            .opacity(0.9)
+            .padding()
+        }
+        .clipShape(
+            RoundedRectangle(cornerRadius: 20)
+        )
+        
     }
 }
+
+
