@@ -37,7 +37,7 @@ class Timer{
     
     private var _dateStarted: Int = 0
     private var _secondsPassedBeforePause: Int = 0
-    private var _timer: Timer?
+    private var _timer: Timer? = nil
     
     //Inicializei as variaveis
     init(workinSeconds:TimeInterval, pauseinSeconds: TimeInterval){
@@ -54,6 +54,9 @@ class Timer{
     }
     var secondsLeft: Int{
         Int(_duration) - _secondPassed
+    }
+    var secondsLeftString: Int{
+        
     }
     var fractionPassed: Double{
         return _fractionPassed
@@ -134,9 +137,7 @@ class Timer{
         
 
     }
-    func invalidate(){
-        
-    }
+    
     
     private func _formatSeconds(_ seconds: Int) -> String{
         if (seconds <= 0) {
