@@ -43,28 +43,49 @@ struct StretchRoutineView: View {
         
         var displayTime = timeRemaining - timerElapsed
         
-        ZStack (alignment: .bottom) {
+        ZStack (alignment: .center) {
             Rectangle()
                 .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.2), bgColor]), startPoint: .top, endPoint: .bottom))
                 .ignoresSafeArea()
             VStack {
-                Text("Descanse")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
                 if isUserResting {
+                    
+                    Text("Descanse")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                     ZStack {
                         Circle()
                             .fill(.quaternary)
+                            .stroke(
+                                bgColor,
+                                lineWidth: 30
+                            )
+                        
+                        Circle()
+                            .trim(
+                                from: 0,
+                                to: CGFloat(timerElapsed+1)/30
+                            ) // 1
+                            .stroke(
+                                buttonColor,
+                                style: StrokeStyle(
+                                    lineWidth: 30,
+                                    lineCap: .round
+                                )
+                            )
+                            .rotationEffect(.degrees(-90))
+                            .animation(.linear, value: CGFloat(timerElapsed))
+                        
+                        
+                        Text(String(format: "%02d", displayTime%60))
+                            .foregroundStyle(.white)
+                            .font(.system(size: 180))
+                            .fontWeight(.black)
                             .padding()
-                        HStack {
-                            Text(String(format: "%02d", displayTime%60))
-                                .foregroundStyle(.white)
-                                .font(.system(size: 200))
-                                .fontWeight(.black)
-                                .padding()
-                                .padding(.horizontal)
-                        }
+                            .padding(.horizontal)
                     }
+                    .padding()
+                    .padding()
                 }
                 else {
                     Text(currentMove!.name)
@@ -88,7 +109,7 @@ struct StretchRoutineView: View {
                         .background {
                             RoundedRectangle(cornerRadius: 100)
                                 .fill(.quaternary)
-    //                            .stroke(.white, lineWidth: 2)
+                            //                            .stroke(.white, lineWidth: 2)
                         }
                         .padding(.horizontal)
                 }
@@ -96,7 +117,11 @@ struct StretchRoutineView: View {
                 
                 HStack {
                     Button {
-                        print("Ashibalalalalala")
+                        if currentMoveSetIndex > 0 {
+                            timerElapsed = 0
+                            currentMoveSetIndex-=1
+                            isUserResting = !isUserResting
+                        }
                     } label: {
                         Image(systemName: "chevron.backward.circle.fill")
                             .resizable()
@@ -145,7 +170,13 @@ struct StretchRoutineView: View {
                     }
                     
                     Button {
-                        print("Ashibalalalalala")
+                        if currentMoveSetIndex < routine!.length - 1 {
+                            timerElapsed = 0
+                            if isUserResting{
+                                currentMoveSetIndex+=1
+                            }
+                            isUserResting = !isUserResting
+                        }
                     } label: {
                         Image(systemName: "chevron.forward.circle.fill")
                             .resizable()
@@ -171,7 +202,7 @@ struct StretchRoutineView: View {
                     timerElapsed = 0
                     isUserResting = !isUserResting
                     if isUserResting {
-                        if currentMoveSetIndex < routine!.length {
+                        if currentMoveSetIndex < routine!.length - 1 {
                             currentMoveSetIndex += 1
                         }
                         else {
