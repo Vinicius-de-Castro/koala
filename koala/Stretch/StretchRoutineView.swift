@@ -37,22 +37,34 @@ struct StretchRoutineView: View {
     
     var body: some View {
         
-        let bgColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchGreen)
+        let bgColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchLight)
+        
+        let buttonColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchGreen)
         
         var displayTime = timeRemaining - timerElapsed
         
-        ZStack {
+        ZStack (alignment: .bottom) {
             Rectangle()
                 .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.2), bgColor]), startPoint: .top, endPoint: .bottom))
                 .ignoresSafeArea()
             VStack {
-                Text("\(displayTime/60):" + String(format: "%02d", displayTime%60))
+                Text("Descanse")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
                 if isUserResting {
-                    Text("Descanse pai")
-                        .font(.largeTitle)
+                    ZStack {
+                        Circle()
+                            .fill(.quaternary)
+                            .padding()
+                        HStack {
+                            Text(String(format: "%02d", displayTime%60))
+                                .foregroundStyle(.white)
+                                .font(.system(size: 200))
+                                .fontWeight(.black)
+                                .padding()
+                                .padding(.horizontal)
+                        }
+                    }
                 }
                 else {
                     Text(currentMove!.name)
@@ -68,40 +80,85 @@ struct StretchRoutineView: View {
                         .padding()
                         .font(.title3)
                         .fontWeight(.medium)
+                    Label("\(displayTime/60):" + String(format: "%02d", displayTime%60), systemImage: "clock.fill")
+                        .foregroundStyle(.white)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding()
+                        .background {
+                            RoundedRectangle(cornerRadius: 100)
+                                .fill(.quaternary)
+    //                            .stroke(.white, lineWidth: 2)
+                        }
+                        .padding(.horizontal)
                 }
                 
                 
-                if isTimerRunning{
-                    Button("Pausar", systemImage: "pause.fill") {
-                        stopTimer()
+                HStack {
+                    Button {
+                        print("Ashibalalalalala")
+                    } label: {
+                        Image(systemName: "chevron.backward.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 80, maxHeight: 80)
                     }
-                    .font(.largeTitle)
-//                    .fontWeight()
-                    .tint(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
+                    .tint(buttonColor)
                     .background {
-                        RoundedRectangle(cornerRadius: 100)
-                            .fill(.quaternary)
-                            .stroke(.white, lineWidth: 2)
+                        Circle()
+                            .fill(.white)
+                            .padding()
                     }
-                    .padding(.horizontal)
-                }
-                else {
-                    Button("Continuar", systemImage: "play.fill") {
-                        startTimer()
-                    }
-                    .font(.largeTitle)
-//                    .fontWeight()
-                    .tint(.white)
                     .padding()
-                    .frame(maxWidth: .infinity)
-                    .background {
-                        RoundedRectangle(cornerRadius: 100)
-                            .fill(.quaternary)
-                            .stroke(.white, lineWidth: 2)
+                    if isTimerRunning{
+                        Button {
+                            stopTimer()
+                        } label: {
+                            Image(systemName: "pause.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 100, maxHeight: 100)
+                        }
+                        .tint(buttonColor)
+                        .background {
+                            Circle()
+                                .fill(.white)
+                                .padding()
+                        }
                     }
-                    .padding(.horizontal)
+                    else {
+                        Button {
+                            startTimer()
+                        } label: {
+                            Image(systemName: "play.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 100, maxHeight: 100)
+                            
+                        }
+                        .tint(buttonColor)
+                        .background {
+                            Circle()
+                                .fill(.white)
+                                .padding()
+                        }
+                    }
+                    
+                    Button {
+                        print("Ashibalalalalala")
+                    } label: {
+                        Image(systemName: "chevron.forward.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 80, maxHeight: 80)
+                    }
+                    .tint(buttonColor)
+                    .background {
+                        Circle()
+                            .fill(.white)
+                            .padding()
+                    }
+                    .padding()
                 }
             }
             
@@ -114,7 +171,12 @@ struct StretchRoutineView: View {
                     timerElapsed = 0
                     isUserResting = !isUserResting
                     if isUserResting {
-                        currentMoveSetIndex += 1
+                        if currentMoveSetIndex < routine!.length {
+                            currentMoveSetIndex += 1
+                        }
+                        else {
+                            print("User finished")
+                        }
                     }
                 }
             }

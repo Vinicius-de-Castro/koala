@@ -77,7 +77,7 @@ struct Memory {
         "STRETCH_CHEST_OPEN" : Move(
             name: "Abertura de Peitoral",
             description: "Sentada sobre os calcanhares, entrelace as mãos atrás e abra o peito.",
-            lenght: 30,
+            lenght: 5,
             type: .stretch,
             level: .light,
             pattern: nil,
