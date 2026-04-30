@@ -29,6 +29,9 @@ struct ContentView: View {
                 StretchView()
                     .navigationTitle(Text("Teste"))
             }
+            //Tab("KegelTeste",systemImage: "circle.fill"){
+              //  KegelShape(fraction: <#T##Double#>, primatyText: <#T##String#>, secondText: <#T##String#>)
+            //}
         }
     }
 }

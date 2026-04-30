@@ -91,8 +91,9 @@ struct Memory {
             lenght: 90,
             type: .kegel,
             level: .light,
-            pattern: [3, 6],
-            image: "KegelIcon"
+            pattern: [kegelMove(kegelPhase: .contract, length: 3), kegelMove(kegelPhase: .release, length: 6)],
+            image: "KegelIcon",
+           repetitions: 10
         ),
         "KEGEL_ENDURANCE" : Move(
             name: "Sustentação",
@@ -100,8 +101,9 @@ struct Memory {
             lenght: 150,
             type: .kegel,
             level: .moderate,
-            pattern: [5,10],
-            image: "KegelIcon"
+            pattern: [kegelMove(kegelPhase: .contract, length: 5), kegelMove(kegelPhase: .release, length: 10)],
+            image: "KegelIcon",
+            repetitions: 10
         ),
         "KEGEL_ELEVATOR" : Move(
             name: "O Elevador",
@@ -109,8 +111,10 @@ struct Memory {
             lenght: 72,
             type: .kegel,
             level: .intense,
-            pattern: [1,1,1,3,1,1,1],
-            image: "KegelIcon"
+            pattern: [kegelMove(kegelPhase: .contract, length: 3),kegelMove(kegelPhase: .hold, length: 3), kegelMove(kegelPhase: .release, length: 3)],
+//            pattern: [1,1,1,3,1,1,1],
+            image: "KegelIcon",
+            repetitions: 8
         )
     ]
     static let routines: [String : Routine] = [
@@ -138,6 +142,7 @@ struct Memory {
             ],
             image: "AberturaPeitoral"
         ),
+        //memory.routines["MORNING_KEGEL"]
         "AFTERNOON_STRETCH" : Routine(
             name: "Alívio Lombar",
             description: "Focada em reduzir a pressão do peso do bebê na lombar e no nervo ciático.",

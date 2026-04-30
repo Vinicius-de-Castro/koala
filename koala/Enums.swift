@@ -15,13 +15,9 @@ enum Intensity {
     case intense
 }
 
-enum Tags {
-    case morning
-    case afternoon
-    case night
-    
-    case pilates //example tags
-    case ball
-    case yoga
+enum kegelPhase
+{
+    case contract
+    case hold
+    case release
 }
-
