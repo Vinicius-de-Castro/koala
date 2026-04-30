@@ -12,13 +12,11 @@ struct CardView: View {
     @State var thisRoutine: Routine
     
     var body: some View {
-        
         let bgColor: Color = ((thisRoutine.type == .kegel) ? .kegelPurple : .stretchGreen)
         let title = thisRoutine.name
         let length = thisRoutine.length
         let count = thisRoutine.count
         let image = thisRoutine.image
-        
         
         HStack {
             //textos
@@ -41,7 +39,7 @@ struct CardView: View {
                     Image(systemName: "clock.fill")
                         .foregroundStyle(.white)
                         .frame(maxWidth: 30)
-                    Text(String(Int(length/60)) + " minutos")
+                    Text(String(Int(length/60)) + (Int(length/60) > 1 ? " minutos" : " minuto"))
                         .font(.title2)
                         .foregroundColor(Color.white)
                 }
@@ -57,7 +55,8 @@ struct CardView: View {
             
             
             Image(image)
-                .resizable(resizingMode: .stretch)
+                .resizable()
+                .scaledToFit()
                 .frame(width: 150, height: 150)
         }
         .padding()
@@ -77,6 +76,7 @@ struct CardView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)
                     .foregroundStyle(Color.white)
+                    .clipped()
             }
             .opacity(0.9)
             .padding()
