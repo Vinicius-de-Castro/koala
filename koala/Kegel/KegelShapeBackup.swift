@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct KegelShape: View {
+struct KegelShapeBackup: View {
     @State var isAnimating = false
     
     @State var routine: Routine?
@@ -23,6 +23,11 @@ struct KegelShape: View {
     
     @State var currentMoveSetIndex = 0
     
+    
+    //
+    //    let fraction: Double
+    //    let primatyText: String
+    //    let secondText: String
     
     var currentMove: Move? {
         return routine?.moveset[currentMoveSetIndex]
@@ -84,6 +89,9 @@ struct KegelShape: View {
         let bgColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchGreen)
         
         ZStack {
+        Rectangle()
+            .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.2), bgColor]), startPoint: .top, endPoint: .bottom))
+            .ignoresSafeArea()
             Circle()
                 .scale(scale)
 //
@@ -100,6 +108,62 @@ struct KegelShape: View {
             Circle()
                 .fill(.white)
                 .frame(width: 100, height: 100)
+            VStack {
+                Text("\(displayTime/60):" + String(format: "%02d", displayTime%60))
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                if isUserResting {
+                    Text("Descanse pai")
+                        .font(.largeTitle)
+                }
+                else {
+                    Text(currentMove!.name)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    
+                    Spacer()
+                    Text(currentMove!.description)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .font(.title3)
+                        .fontWeight(.medium)
+                }
+                
+                if isTimerRunning{
+                    Button("Pausar", systemImage: "pause.fill") {
+                        stopTimer()
+                    }
+                    .font(.largeTitle)
+                    //                    .fontWeight()
+                    .tint(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background {
+                        RoundedRectangle(cornerRadius: 100)
+                            .fill(.quaternary)
+                            .stroke(.white, lineWidth: 2)
+                    }
+                    .padding(.horizontal)
+                }
+                else {
+                    Button("Continuar", systemImage: "play.fill") {
+                        startTimer()
+                    }
+                    .font(.largeTitle)
+                    //                    .fontWeight()
+                    .tint(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background {
+                        RoundedRectangle(cornerRadius: 100)
+                            .fill(.quaternary)
+                            .stroke(.white, lineWidth: 2)
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            
             
             .onAppear {
                 startTimer()
@@ -135,5 +199,5 @@ struct KegelShape: View {
 }
 
 #Preview {
-    KegelShape(routine: Memory.routines["MORNING_KEGEL"])
+    KegelShapeBackup(routine: Memory.routines["MORNING_KEGEL"])
 }

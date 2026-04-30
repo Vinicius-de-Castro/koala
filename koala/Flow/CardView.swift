@@ -26,7 +26,8 @@ struct CardView: View {
             ){
                 
                 Text(title)
-                    .font(.title)
+                    .font(.title2)
+                    .fontWeight(.bold)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
                     .foregroundColor(Color.white)
@@ -47,7 +48,7 @@ struct CardView: View {
                     Image(systemName: "dumbbell.fill")
                         .foregroundStyle(.white)
                         .frame(maxWidth: 30)
-                    Text(String(count) + " exercícios")
+                    Text(String(count) + (count > 1 ? " exercícios" : " exercício"))
                         .font(.title2)
                         .foregroundColor(Color.white)
                 }
@@ -60,7 +61,7 @@ struct CardView: View {
                 .frame(width: 150, height: 150)
         }
         .padding()
-        .frame(height: 180)
+        .frame(maxHeight: 160)
         .background(bgColor)
         .overlay(alignment: .topTrailing) {
             ZStack (

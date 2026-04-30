@@ -19,9 +19,11 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $currentTab) {
-            Tab("Início", systemImage: "house.fill", value: Tabs.main) {
+            
+            Tab("Sugestões", systemImage: "house.fill", value: Tabs.main) {
                 HomeView()
             }
+            
             Tab("Kegel", systemImage: "figure.mind.and.body", value: Tabs.kegel) {
                 KegelView()
             }

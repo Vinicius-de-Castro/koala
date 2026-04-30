@@ -42,7 +42,7 @@ struct CarrouselCard: View{
                     .resizable()
                     .scaledToFill()
                     .frame(maxWidth: .infinity)
-                    .frame(width: screenWidth, height: screenHeight*0.7, alignment: .center)
+                    .frame(width: screenWidth, height: screenHeight*0.6, alignment: .center)
                     .ignoresSafeArea()
                     .clipped()
                     .containerRelativeFrame(.horizontal)
@@ -56,19 +56,23 @@ struct CarrouselCard: View{
                     Spacer()
                     
                     Text(subtitle)
-                        .font(.title)
-                        .fontWeight(.medium)
+                        .font(.subheadline)
+                        .textCase(.uppercase)
+                        .fontWeight(.bold)
                         .padding(-5)
                         .foregroundStyle(.kegelPurple)
                     Text(title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                        .foregroundStyle(.kegelDark)
                     Button(button) {
                         selectedRoutine = routine
                     }
                     .padding()
-                    .background(.stretchGreen)
+                    .background(cardColor)
                     .tint(Color.white)
+                    .font(.title3)
+                    .fontWeight(.bold)
                     .clipShape(Capsule())
                 }
                 .padding()
@@ -78,7 +82,7 @@ struct CarrouselCard: View{
         }
         .navigationDestination(item: $selectedRoutine){ _ in
             if (routine.type == .stretch){
-                StretchDetailView(routine: routine)
+                DetailView(routine: routine)
             }
             else {
                 // 

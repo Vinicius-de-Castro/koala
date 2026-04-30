@@ -30,7 +30,7 @@ struct StretchView: View {
                 }
             }
             .navigationDestination(item: $selectedRoutine) { routine in
-                StretchDetailView(routine: routine)
+                DetailView(routine: routine)
             }
         }
     }

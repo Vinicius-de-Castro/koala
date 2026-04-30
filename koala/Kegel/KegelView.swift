@@ -8,15 +8,29 @@
 import SwiftUI
 
 struct KegelView: View {
-
+    
+    @State private var selectedRoutine: Routine?
+    
     var body: some View {
-        //TIMER DO KEGEL
-        Text("Rotinas de Kegel")
-            .font(.system(size: 22, weight: .bold))
-        ScrollView {
-            ForEach(Array(Memory.routines.keys), id: \.self) { key in
-                CardView(thisRoutine: Memory.routines[key]!)
-                    .frame(height: 150)
+        NavigationStack {
+            ScrollView{
+                Text("Rotinas de Kegel")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                    .containerRelativeFrame(.horizontal, alignment: .leading)
+                ForEach(Array(Memory.routines.keys), id: \.self) { key in
+                    if Memory.routines[key]?.type == .kegel {
+                        CardView(thisRoutine: Memory.routines[key]!)
+                            .padding(.horizontal)
+                            .onTapGesture {
+                                selectedRoutine = Memory.routines[key]
+                            }
+                    }
+                }
+            }
+            .navigationDestination(item: $selectedRoutine) { routine in
+                DetailView(routine: routine)
             }
         }
     }

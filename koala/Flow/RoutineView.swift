@@ -1,5 +1,5 @@
 //
-//  StretchRoutineView.swift
+//  RoutineView.swift
 //  koala
 //
 //  Created by User on 28/04/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StretchRoutineView: View {
+struct RoutineView: View {
     
     @Environment(\.dismiss) private var dismiss
     
@@ -25,9 +25,15 @@ struct StretchRoutineView: View {
     
     @State var currentMoveSetIndex = 0
     
+    @State var scale: CGFloat = 1
+    
+    @State var animationStep: AnimationStep = .grow
+    
     var screenHeight = UIScreen.main.bounds.size.height
     
     var screenWidth = UIScreen.main.bounds.size.width
+    
+    var pauseState: AnimationStep = .grow
     
     var currentMove: Move? {
         if currentMoveSetIndex < routine!.count{
@@ -46,11 +52,68 @@ struct StretchRoutineView: View {
         return 0
     }
     
+    enum AnimationStep {
+        case grow, hold, contract, stop
+    }
+    
+    func animateCircle() {
+        switch animationStep {
+        case .grow:
+            withAnimation(.easeIn(duration: TimeInterval(6 - (timerElapsed%6)))) {
+                scale = 1.5
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6){
+                if(isTimerRunning) {
+                    animationStep = .contract
+                }
+            }
+        case .hold:
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+                if(isTimerRunning) {
+                    animationStep = .grow
+                }
+            }
+        case .contract:
+            withAnimation(.easeIn(duration: 3)) {
+                scale = 1
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+                if (isTimerRunning) {
+                    animationStep = .hold
+                }
+            }
+        case .stop:
+            print("dsa")
+        }
+        
+    }
+    func startTimer() {
+        animateCircle()
+        animationStep = .grow
+        isTimerRunning = true
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
+            timerElapsed += 1
+        }
+        
+    }
+    func stopTimer(){
+        withAnimation() {
+            scale = 1
+        }
+        isTimerRunning = false
+        timer?.invalidate()
+    }
+    
     var body: some View {
         
-        let bgColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchLight)
+        let bgColor: Color = (routine!.type == .kegel ? Color.kegelLight : .stretchLight)
         
         let buttonColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchGreen)
+        
+        let textColor: Color = (routine!.type == .kegel ? Color.kegelDark : .stretchDark)
         
         var displayTime = timeRemaining - timerElapsed
         
@@ -58,17 +121,17 @@ struct StretchRoutineView: View {
         if !isUserDone {
             ZStack (alignment: .center) {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.2), bgColor]), startPoint: .top, endPoint: .bottom))
+                    .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.3), bgColor]), startPoint: .top, endPoint: .bottom))
                     .ignoresSafeArea()
                 VStack {
                     if isUserResting {
-                        Text("Descanse e relaxe")
+                        Text("Descanse")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .padding()
                         ZStack {
                             Circle()
-                                .fill(.quaternary)
+                                .fill(.white)
                                 .stroke(
                                     bgColor,
                                     lineWidth: 30
@@ -91,8 +154,8 @@ struct StretchRoutineView: View {
                             
                             
                             Text(String(format: "%02d", displayTime%60))
-                                .foregroundStyle(.white)
-                                .font(.system(size: 180))
+                                .foregroundStyle(textColor)
+                                .font(.system(size: 160))
                                 .fontWeight(.black)
                                 .padding()
                                 .padding(.horizontal)
@@ -100,15 +163,39 @@ struct StretchRoutineView: View {
                         .frame(maxHeight: .infinity)
                         .padding()
                         .padding()
+                        .padding()
                     }
                     else {
+                        
                         Text(currentMove!.name)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                         
-                        Image(currentMove!.image)
-                            .resizable()
-                            .scaledToFit()
+                        if routine!.type == .stretch {
+                            Image(currentMove!.image)
+                                .resizable()
+                                .scaledToFit()
+                        }
+                        else {
+                            ZStack {
+                                Circle()
+                                    .scale(scale)
+                                    .frame(width: 180, height: 180)
+                                    .onAppear {
+                                        animateCircle()
+                                    }
+                                    .onChange(of: animationStep) { _, _ in
+                                        animateCircle()
+                                    }
+                                
+                                    .foregroundStyle(RadialGradient(colors: [.white, .kegelLight, .kegelPurple], center: .center, startRadius: 0, endRadius: 240))
+                                Circle()
+                                    .fill(.white)
+                                    .frame(width: 120, height: 120)
+                            }
+                            .frame(maxHeight: .infinity)
+                        }
+                        
                         
                         Text(currentMove!.description)
                             .multilineTextAlignment(.center)
@@ -266,20 +353,8 @@ struct StretchRoutineView: View {
             .navigationBarBackButtonHidden(true)
         }
     }
-    
-    func startTimer() {
-        isTimerRunning = true
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
-            timerElapsed += 1
-        }
-        
-    }
-    func stopTimer(){
-        isTimerRunning = false
-        timer?.invalidate()
-    }
 }
 
 #Preview {
-    StretchRoutineView(routine: Memory.routines["MORNING_STRETCH"])
+    RoutineView(routine: Memory.routines["MORNING_KEGEL"])
 }

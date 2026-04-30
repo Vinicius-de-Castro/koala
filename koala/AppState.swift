@@ -40,7 +40,7 @@ struct Memory {
         ),
         "STRETCH_LATERAL" : Move(
             name: "Alongamento Lateral",
-            description: "Sentada com uma perna estendida, incline o tronco suavemente para o lado. Respire fundo.",
+            description: "Sente-se com uma perna estendida, incline o tronco suavemente para o lado. Respire fundo.",
             lenght: 90, // 45s cada lado
             type: .stretch,
             level: .light,
@@ -49,7 +49,7 @@ struct Memory {
         ),
         "STRETCH_CAMEL" : Move(
             name: "Abertura Torácica",
-            description: "Ajoelhada, coloque as mãos nos calcanhares e olhe para o teto abrindo o tórax suavemente.",
+            description: "Ajoelhe-se, coloque as mãos nos calcanhares e olhe para o teto abrindo o tórax suavemente.",
             lenght: 30,
             type: .stretch,
             level: .moderate,
@@ -67,7 +67,7 @@ struct Memory {
         ),
         "STRETCH_HIP_FLEXOR" : Move(
             name: "Flexor de Quadril",
-            description: "Ajoelhada em um pé, empurre o quadril para frente. Troque o lado após 30s.",
+            description: "Ajoelhe-se em um pé, empurre o quadril para frente. Troque o lado após 30s.",
             lenght: 60,
             type: .stretch,
             level: .light,
@@ -76,8 +76,8 @@ struct Memory {
         ),
         "STRETCH_CHEST_OPEN" : Move(
             name: "Abertura de Peitoral",
-            description: "Sentada sobre os calcanhares, entrelace as mãos atrás e abra o peito.",
-            lenght: 5,
+            description: "Sente-se sobre os calcanhares, entrelace as mãos atrás e abra o peito.",
+            lenght: 30,
             type: .stretch,
             level: .light,
             pattern: nil,
@@ -118,15 +118,6 @@ struct Memory {
         )
     ]
     static let routines: [String : Routine] = [
-        "DEFAULT" : Routine(
-            name: "ROTINA PADRÃO",
-            description: "ALGUM ERRO ACONTECEU",
-            type: .kegel,
-            level: .light,
-            tags: [],
-            moveset: [moves["DEFAULT"]!],
-            image: "DefaultStretch"
-        ),
         
         // --- ROTINAS DE ALONGAMENTO ---
         "MORNING_STRETCH" : Routine(

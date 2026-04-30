@@ -12,8 +12,13 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            VStack{
+            VStack (alignment: .leading){
                 CarrouselView()
+                Text("Recomendado")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                    .foregroundStyle(.kegelDark)
                 CardView(
                     thisRoutine: Memory.routines["MORNING_STRETCH"]!
                 )
@@ -21,11 +26,12 @@ struct HomeView: View {
                     selectedRoutine = Memory.routines["MORNING_STRETCH"]!
                 }
                 .frame(height: 150)
-                .padding()
+                .padding(.horizontal)
+                .padding(.bottom)
                 Spacer()
             }
             .navigationDestination(item: $selectedRoutine) { routine in
-                StretchDetailView(routine: routine)
+                DetailView(routine: routine)
             }
         }
     }

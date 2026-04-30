@@ -1,5 +1,5 @@
 //
-//  StretchDetailView.swift
+//  DetailView.swift
 //  koala
 //
 //  Created by User on 28/04/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StretchDetailView: View {
+struct DetailView: View {
     
     @State var routine: Routine
     
@@ -73,7 +73,7 @@ struct StretchDetailView: View {
             }
             .ignoresSafeArea()
             .navigationDestination(item: $selectedRoutine) { routine in
-                StretchRoutineView(routine: routine)
+                RoutineView(routine: routine)
             }
         }
     }
@@ -81,6 +81,6 @@ struct StretchDetailView: View {
 
 #Preview {
     if let routine = Memory.routines["MORNING_STRETCH"] {
-        StretchDetailView(routine: routine)
+        DetailView(routine: routine)
     }
 }
