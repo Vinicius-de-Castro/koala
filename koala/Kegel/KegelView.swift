@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct KegelView: View {
-    
+
     var body: some View {
+        //TIMER DO KEGEL
         Text("Rotinas de Kegel")
             .font(.system(size: 22, weight: .bold))
         ScrollView {
@@ -21,6 +22,3 @@ struct KegelView: View {
     }
 }
 
-#Preview {
-    KegelView()
-}

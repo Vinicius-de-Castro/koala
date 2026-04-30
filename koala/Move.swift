@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+struct kegelMove {
+    var kegelPhase: kegelPhase
+    var length: Int
+}
+
 class Move {
     let name: String
     let description: String
@@ -16,10 +21,12 @@ class Move {
     let level: Intensity
     
     let tags: [String] = []
-    let pattern: [Int]? // kegel-only
+    let pattern: [kegelMove]? // kegel-only
     let image: String // Image-code
     
-    init(name: String, description: String, lenght: Int, type: moveType, level: Intensity, pattern: [Int]?, image: String) {
+    let repetitions: Int?
+    
+    init(name: String, description: String, lenght: Int, type: moveType, level: Intensity, pattern: [kegelMove]?, image: String, repetitions: Int? = 1) {
         self.name = name
         self.description = description
         self.lenght = lenght
@@ -27,5 +34,6 @@ class Move {
         self.level = level
         self.pattern = pattern
         self.image = image
+        self.repetitions = repetitions
     }
 }
