@@ -62,6 +62,7 @@ struct DetailView: View {
                         .onTapGesture {
                             selectedRoutine = routine
                         }
+                    //PARTE DE INTERAÇÃO PARA PROXIMA PAGINA
                     Text(routine.description)
                         .font(.body)
                         .padding(.horizontal)
@@ -69,6 +70,10 @@ struct DetailView: View {
                         .font(.body)
                         .fontWeight(.medium)
                         .padding(.horizontal)
+                    
+                    
+                    //area da descrição do exercicio
+                    
                 }
             }
             .ignoresSafeArea()
