@@ -17,7 +17,6 @@ struct CardView: View {
         let length = thisRoutine.length
         let count = thisRoutine.count
         let image = thisRoutine.image
-        
         HStack {
             //textos
             VStack (
@@ -48,9 +47,16 @@ struct CardView: View {
                     Image(systemName: "dumbbell.fill")
                         .foregroundStyle(.white)
                         .frame(maxWidth: 30)
-                    Text(String(count) + (count > 1 ? " exercícios" : " exercício"))
-                        .font(.title2)
-                        .foregroundColor(Color.white)
+                    if thisRoutine.type == .stretch {
+                        Text(String(count) + (count > 1 ? " exercícios" : " exercício"))
+                            .font(.title2)
+                            .foregroundColor(Color.white)
+                    }
+                    else {
+                        Text(String(thisRoutine.reps) + (thisRoutine.reps > 1 ? " repetições" : " repetição"))
+                            .font(.title2)
+                            .foregroundColor(Color.white)
+                    }
                 }
             }
             

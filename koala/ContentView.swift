@@ -18,23 +18,22 @@ struct ContentView: View {
     @State private var currentTab: Tabs = .main
     
     var body: some View {
+      
         TabView(selection: $currentTab) {
             
-            Tab("Sugestões", systemImage: "house.fill", value: Tabs.main) {
+            Tab("Sugestões", systemImage: "ring.dashed", value: Tabs.main) {
                 HomeView()
             }
             
-            Tab("Kegel", systemImage: "figure.mind.and.body", value: Tabs.kegel) {
+            Tab("Kegel", systemImage: "camera.macro", value: Tabs.kegel) {
                 KegelView()
             }
             Tab("Alongamentos", systemImage: "figure.strengthtraining.functional", value: Tabs.stretch) {
                 StretchView()
                     .navigationTitle(Text("Teste"))
             }
-            //Tab("KegelTeste",systemImage: "circle.fill"){
-              //  KegelShape(fraction: <#T##Double#>, primatyText: <#T##String#>, secondText: <#T##String#>)
-            //}
         }
+        .tint(.kegelPurple)
     }
 }
 

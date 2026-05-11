@@ -115,14 +115,16 @@ struct RoutineView: View {
         
         let textColor: Color = (routine!.type == .kegel ? Color.kegelDark : .stretchDark)
         
-        var displayTime = timeRemaining - timerElapsed
+        let displayTime = timeRemaining - timerElapsed
         
         
         if !isUserDone {
             ZStack (alignment: .center) {
                 Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.3), bgColor]), startPoint: .top, endPoint: .bottom))
+                
                     .ignoresSafeArea()
+                
                 VStack {
                     if isUserResting {
                         Text("Descanse")
@@ -136,6 +138,7 @@ struct RoutineView: View {
                                     bgColor,
                                     lineWidth: 30
                                 )
+                            
                             
                             Circle()
                                 .trim(
@@ -164,6 +167,7 @@ struct RoutineView: View {
                         .padding()
                         .padding()
                         .padding()
+                        .frame(minWidth: 50)
                     }
                     else {
                         
@@ -190,8 +194,14 @@ struct RoutineView: View {
                                 
                                     .foregroundStyle(RadialGradient(colors: [.white, .kegelLight, .kegelPurple], center: .center, startRadius: 0, endRadius: 240))
                                 Circle()
+                                
                                     .fill(.white)
                                     .frame(width: 120, height: 120)
+                                
+                                Text((String(format: "%02ds", displayTime)))
+                                    .foregroundStyle(.black)
+                                    .fontWeight(.bold)
+                                    .font(.system(size: 30))
                             }
                             .frame(maxHeight: .infinity)
                         }
@@ -200,20 +210,25 @@ struct RoutineView: View {
                         Text(currentMove!.description)
                             .multilineTextAlignment(.center)
                             .padding()
-                            .font(.title3)
-                            .fontWeight(.medium)
-                        Label("\(displayTime/60):" + String(format: "%02d", displayTime%60), systemImage: "clock.fill")
-                            .foregroundStyle(.white)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .padding()
-                            .background {
-                                RoundedRectangle(cornerRadius: 100)
-                                    .fill(.quaternary)
-                            }
                             .padding(.horizontal)
+                            .font(.title2)
+                            .fontWeight(.medium)
+                        if routine!.type == .stretch {
+                            Label("\(displayTime/60):" + String(format: "%02d", displayTime%60), systemImage: "clock.fill")
+                                .foregroundStyle(.white)
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: 100)
+                                        .fill(.quaternary)
+                                }
+                                .padding(.horizontal)
+                        }
+                        
                     }
                     
+                    Spacer()
                     
                     HStack {
                         Button {
@@ -226,7 +241,7 @@ struct RoutineView: View {
                             Image(systemName: "chevron.backward.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: 80, maxHeight: 80)
+                                .frame(maxWidth: 70, maxHeight: 70)
                         }
                         .tint(buttonColor)
                         .background {
@@ -243,6 +258,7 @@ struct RoutineView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(maxWidth: 100, maxHeight: 100)
+                                
                             }
                             .tint(buttonColor)
                             .background {
@@ -258,7 +274,7 @@ struct RoutineView: View {
                                 Image(systemName: "play.circle.fill")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(maxWidth: 100, maxHeight: 100)
+                                    .frame(maxWidth: 77 , maxHeight: 77)
                                 
                             }
                             .tint(buttonColor)
@@ -266,6 +282,7 @@ struct RoutineView: View {
                                 Circle()
                                     .fill(.white)
                                     .padding()
+                                
                             }
                         }
                         
@@ -277,7 +294,7 @@ struct RoutineView: View {
                             Image(systemName: "chevron.forward.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: 80, maxHeight: 80)
+                                .frame(maxWidth: 70, maxHeight: 70)
                         }
                         .tint(buttonColor)
                         .background {
@@ -309,48 +326,70 @@ struct RoutineView: View {
             }
             .toolbar(.hidden, for: .tabBar)
         }
+        //PROXIMO EXERCICIO
+        
+        
+        
+        
+        
+        //COMEMORAÇÃO
         else {
             
-            VStack (alignment: .leading){
-                ZStack(alignment: .bottomLeading){
-                    Image(routine!.image)
-                        .resizable()
-                        .scaledToFill()
-                    
-                    Rectangle()
-                        .fill(LinearGradient(gradient: Gradient(colors: [.white .opacity(0), .white .opacity(0.3), .white]), startPoint: .top, endPoint: .bottom))
-                        .ignoresSafeArea()
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.3), bgColor]), startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+                VStack {
+                    if (routine!.type == .stretch) {
+                        Image("StretchFinish")
+                            .resizable()
+                            .scaledToFit()
+                    }
+                    else {
+                        Image("KegelFinish")
+                            .resizable()
+                            .scaledToFit()
+                    }
                     
                     Text("Parabéns!")
                         .font(.system(size: 64))
                         .fontWeight(.bold)
                         .padding(20)
+                        .foregroundStyle(textColor)
+                    
+                    Text("Você concluiu com sucesso a rotina de exercícios \(routine!.name)!")
+                        .font(.title2)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    //BOTAO DE FECHAR//////
+                    
+                    //KegelView()
+                    Button {
+                        dismiss.callAsFunction()
+                    } label: {
+                        Text("Fechar")
+                            .font(.title)
+                            .fontWeight(.medium)
+                            .tint(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 32)
+                                    .fill(buttonColor)
+                            )
+                        
+                            .padding()
+                    }
+                    
                 }
-                .frame(maxWidth: screenWidth, maxHeight: screenWidth)
                 
-                Text("Você concluiu com sucesso a rotina de exercícios \(routine!.name)!")
-                    .font(.title)
-                    .padding(.horizontal)
-                
-                Spacer()
-                Button {
-                    dismiss.callAsFunction()
-                } label: {
-                    Text("Fechar")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .tint(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 32)
-                                .fill(buttonColor)
-                        )
-                        .padding()
-                }
+                .toolbar(.hidden, for: .tabBar)
+                .navigationBarBackButtonHidden(true)
             }
-            .toolbar(.hidden, for: .tabBar)
-            .navigationBarBackButtonHidden(true)
         }
     }
 }

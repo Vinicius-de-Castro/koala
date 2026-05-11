@@ -87,7 +87,7 @@ struct Memory {
         // --- KEGEL ---
         "KEGEL_BASIC" : Move(
             name: "Ritmo Básico",
-            description: "Imagine que está sugando um mirtilo. Contraia 3s e relaxe totalmente por 6s. Repita 10x.",
+            description: "Contraia o assoalho pélvico por 3s e relaxe totalmente por 6s. Repita 10x.",
             lenght: 90,
             type: .kegel,
             level: .light,
@@ -97,7 +97,7 @@ struct Memory {
         ),
         "KEGEL_ENDURANCE" : Move(
             name: "Sustentação",
-            description: "Mantenha a contração constante. Contraia 5s e relaxe por 10s sem prender o ar. Repita 10x.",
+            description: "Mantenha a contração constante. Contraia o assoalho pélvico por 5s e relaxe por 10s sem prender o ar. Repita 10x.",
             lenght: 150,
             type: .kegel,
             level: .moderate,
@@ -107,7 +107,7 @@ struct Memory {
         ),
         "KEGEL_ELEVATOR" : Move(
             name: "O Elevador",
-            description: "Suba 3 andares contraindo aos poucos. No topo, segure 3s e desça em 3 etapas. Repita 8x.",
+            description: "Contraia o assoalho pélvico aos poucos. No topo, segure 3s e desça em 3 etapas. Repita 8x.",
             lenght: 72,
             type: .kegel,
             level: .intense,

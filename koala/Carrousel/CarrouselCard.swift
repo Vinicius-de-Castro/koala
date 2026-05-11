@@ -81,12 +81,7 @@ struct CarrouselCard: View{
             .padding(.bottom, 100)
         }
         .navigationDestination(item: $selectedRoutine){ _ in
-            if (routine.type == .stretch){
-                DetailView(routine: routine)
-            }
-            else {
-                // 
-            }
+            DetailView(routine: routine)
         }
         
     }

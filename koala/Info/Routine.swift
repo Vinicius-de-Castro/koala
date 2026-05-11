@@ -19,6 +19,7 @@ class Routine: Identifiable, Hashable, Equatable {
     let tags: [String]
     let moveset: [Move]
     let image: String
+    var reps: Int
     
     init(name: String, description: String, type: moveType, level: Intensity, tags: [String], moveset: [Move], image: String) {
         self.name = name
@@ -30,10 +31,17 @@ class Routine: Identifiable, Hashable, Equatable {
         self.level = level
         self.tags = tags
         self.image = image
+        self.reps = 0
         
         for move in moveset {
             length += move.lenght
             count+=1
+        }
+        
+        if type == .kegel {
+            for move in moveset {
+                self.reps += move.repetitions!
+            }
         }
     }
     
