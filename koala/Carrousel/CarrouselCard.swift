@@ -24,7 +24,7 @@ struct CarrouselCard: View{
     var id = UUID()
     
     var cardColor: Color {
-        return (routine.type == .kegel ? .kegelPurple : .stretchGreen)
+        return (routine.type == .kegel ? .kegelLight : .stretchGreen)
     }
     
     var screenHeight = UIScreen.main.bounds.size.height
@@ -46,11 +46,13 @@ struct CarrouselCard: View{
                     .ignoresSafeArea()
                     .clipped()
                     .containerRelativeFrame(.horizontal)
+                    .accessibilityHidden(true)
                 
                 
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: [.white .opacity(0), .white .opacity(0.6), .white]), startPoint: .top, endPoint: .bottom))
+                    .fill(LinearGradient(gradient: Gradient(colors: [Color("testColor") .opacity(0), Color("testColor") .opacity(0.6), Color("testColor")]), startPoint: .top, endPoint: .bottom))
                     .ignoresSafeArea()
+                    .accessibilityHidden(true)
                 
                 VStack {
                     Spacer()
@@ -60,8 +62,8 @@ struct CarrouselCard: View{
                         .textCase(.uppercase)
                         .fontWeight(.bold)
                         .padding(-5)
-                        .foregroundStyle(.kegelPurple)
-                    Text(title)
+                        .foregroundStyle(.kegelDark)
+                    Text(routine.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundStyle(.kegelDark)
@@ -70,7 +72,7 @@ struct CarrouselCard: View{
                     }
                     .padding()
                     .background(cardColor)
-                    .tint(Color.white)
+                    .tint(.colorText)
                     .font(.title3)
                     .fontWeight(.bold)
                     .clipShape(Capsule())

@@ -115,17 +115,18 @@ struct Memory {
 //            pattern: [1,1,1,3,1,1,1],
             image: "KegelIcon",
             repetitions: 8
-        )
+        ),
+      
     ]
     static let routines: [String : Routine] = [
         
-        // --- ROTINAS DE ALONGAMENTO ---
+        // --- ROTINAS DE ALONGAMENTO(tela de alongamentos view) ---
         "MORNING_STRETCH" : Routine(
             name: "Despertar Postural",
             description: "Série rápida para alinhar a coluna. Nota: Se sentir desconforto, pare imediatamente.",
             type: .stretch,
             level: .light,
-            tags: ["Manhã", "Rápido", "Leve"],
+            tags: ["Manhã", "Leve"],
             moveset: [
                 moves["STRETCH_CHEST_OPEN"]!,
                 moves["STRETCH_OMBRO_COSTAS"]!,
@@ -151,13 +152,17 @@ struct Memory {
             description: "Prepare o corpo para o descanso com relaxamento pélvico profundo.",
             type: .stretch,
             level: .light,
-            tags: ["Noite", "Relaxante"],
+            tags: ["Noite", "dificil"],
             moveset: [
                 moves["STRETCH_CAMEL"]!,
                 moves["STRETCH_CHILD_POSE"]!
             ],
             image: "AberturaToraxica"
         ),
+      
+        
+        
+        
         
         // --- ROTINAS DE KEGEL ---
         "MORNING_KEGEL" : Routine(
@@ -174,7 +179,7 @@ struct Memory {
             description: "Treine a resistência para suportar melhor o peso do útero.",
             type: .kegel,
             level: .moderate,
-            tags: ["Tarde", "Força"],
+            tags: ["Tarde", "difícil"],
             moveset: [moves["KEGEL_ENDURANCE"]!],
             image: "KegelIcon"
         ),
@@ -186,6 +191,8 @@ struct Memory {
             tags: ["Noite", "Difícil"],
             moveset: [moves["KEGEL_ELEVATOR"]!],
             image: "KegelIcon"
-        )
+            
+            ),
+          
     ]
 }

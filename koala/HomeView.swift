@@ -18,7 +18,10 @@ struct HomeView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.horizontal)
-                    .foregroundStyle(.kegelDark)
+                    .foregroundStyle(.stretchGreen)
+                    .accessibilityLabel("Recomendado")
+                        
+                    
                 CardView(
                     thisRoutine: Memory.routines["MORNING_STRETCH"]!
                 )

@@ -26,7 +26,7 @@ struct TagView: View {
             .padding(.vertical, 8)
             .background {
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(.quaternary)
+                    .fill(.grayCustom)
                     .stroke(moveColor, lineWidth:2)
             }
     }

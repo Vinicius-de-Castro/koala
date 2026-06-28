@@ -56,64 +56,67 @@ struct RoutineView: View {
         case grow, hold, contract, stop
     }
     
+    //ESSA PARTE É APENAS A ANIMAÇÃO DA CONTRAÇÃO
     func animateCircle() {
-        switch animationStep {
-        case .grow:
-            withAnimation(.easeIn(duration: TimeInterval(6 - (timerElapsed%6)))) {
+        // Definimos um ciclo total. Exemplo: 6s (contrair) + 3s (segurar) + 3s (relaxar) = 12 segundos
+        let tempoDoCiclo = 12
+        let segundoAtualDoCiclo = timerElapsed % tempoDoCiclo
+        
+        // Mudamos o estado do círculo baseando-se puramente no segundo atual
+        withAnimation(.linear(duration: 1.0)) {
+            if segundoAtualDoCiclo < 6 {
+                // Primeiros 6 segundos: Círculo expandido (Contração/Grow)
+                animationStep = .grow
                 scale = 1.5
+            } else if segundoAtualDoCiclo < 9 {
+                // Dos segundos 6 a 9: Círculo encolhe (Relaxamento/Contract)
+                animationStep = .contract
+                scale = 1.0
+            } else {
+                // Dos segundos 9 a 12: Círculo parado no tamanho normal (Hold/Stop)
+                animationStep = .hold
+                scale = 1.0
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 6){
-                if(isTimerRunning) {
-                    animationStep = .contract
-                }
-            }
-        case .hold:
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
-                if(isTimerRunning) {
-                    animationStep = .grow
-                }
-            }
-        case .contract:
-            withAnimation(.easeIn(duration: 3)) {
-                scale = 1
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
-                if (isTimerRunning) {
-                    animationStep = .hold
-                }
-            }
-        case .stop:
-            print("dsa")
         }
-        
     }
+//accessibiltyValue()
     func startTimer() {
-        animateCircle()
-        animationStep = .grow
-        isTimerRunning = true
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
-            timerElapsed += 1
-        }
+        // Evita criar timers duplicados se o usuário apertar "Play" várias vezes
+        if timer != nil { return }
         
-    }
-    func stopTimer(){
-        withAnimation() {
-            scale = 1
+        isTimerRunning = true
+        
+        // Dispara a animação imediatamente ao iniciar
+        animateCircle()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            timerElapsed += 1
+            
+            // A cada 1 segundo que passa, a animação avalia o que deve fazer
+            animateCircle()
         }
+    }
+
+    func stopTimer() {
         isTimerRunning = false
         timer?.invalidate()
+        timer = nil // Limpa o timer da memória
+        
+        // Opcional: Reseta o círculo para o tamanho normal ao pausar
+        withAnimation(.easeOut(duration: 0.5)) {
+            scale = 1.0
+        }
     }
     
     var body: some View {
         
         let bgColor: Color = (routine!.type == .kegel ? Color.kegelLight : .stretchLight)
         
-        let buttonColor: Color = (routine!.type == .kegel ? Color.kegelPurple : .stretchGreen)
+        let buttonColor: Color = (routine!.type == .kegel ? Color.kegelLight : .stretchGreen)
         
-        let textColor: Color = (routine!.type == .kegel ? Color.kegelDark : .stretchDark)
+        let textColor: Color = (routine!.type == .kegel ? Color.kegelLight : .stretchDark)
+        
+        let colorKegel: Color = (routine!.type == .kegel ? .kegelCircle: .stretchGreen)
         
         let displayTime = timeRemaining - timerElapsed
         
@@ -121,10 +124,12 @@ struct RoutineView: View {
         if !isUserDone {
             ZStack (alignment: .center) {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: [.white, bgColor .opacity(0.3), bgColor]), startPoint: .top, endPoint: .bottom))
+                    .fill(LinearGradient(gradient: Gradient(colors: [.gray .opacity(0.1) , bgColor, bgColor .opacity(0.5)]), startPoint: .top, endPoint: .bottom))
                 
                     .ignoresSafeArea()
                 
+                
+                //O BOTÀO DE DESCANSO DOS ALONGAMENTOS
                 VStack {
                     if isUserResting {
                         Text("Descanse")
@@ -146,7 +151,7 @@ struct RoutineView: View {
                                     to: CGFloat(timerElapsed+1)/30
                                 )
                                 .stroke(
-                                    buttonColor,
+                                    .stretchDark,
                                     style: StrokeStyle(
                                         lineWidth: 30,
                                         lineCap: .round
@@ -185,14 +190,9 @@ struct RoutineView: View {
                                 Circle()
                                     .scale(scale)
                                     .frame(width: 180, height: 180)
-                                    .onAppear {
-                                        animateCircle()
-                                    }
-                                    .onChange(of: animationStep) { _, _ in
-                                        animateCircle()
-                                    }
+
                                 
-                                    .foregroundStyle(RadialGradient(colors: [.white, .kegelLight, .kegelPurple], center: .center, startRadius: 0, endRadius: 240))
+                                    .foregroundStyle(RadialGradient(colors: [.white, .kegelLight, .kegelDark], center: .center, startRadius: 0, endRadius: 240))
                                 Circle()
                                 
                                     .fill(.white)
@@ -202,10 +202,16 @@ struct RoutineView: View {
                                     .foregroundStyle(.black)
                                     .fontWeight(.bold)
                                     .font(.system(size: 30))
+                                    .accessibilityLabel("\(Int(displayTime/60))%")//
                             }
                             .frame(maxHeight: .infinity)
                         }
-                        
+                        if routine!.type == .kegel{
+                           
+                        }
+                        ZStack {
+                            
+                        }
                         
                         Text(currentMove!.description)
                             .multilineTextAlignment(.center)
@@ -213,6 +219,8 @@ struct RoutineView: View {
                             .padding(.horizontal)
                             .font(.title2)
                             .fontWeight(.medium)
+                         
+
                         if routine!.type == .stretch {
                             Label("\(displayTime/60):" + String(format: "%02d", displayTime%60), systemImage: "clock.fill")
                                 .foregroundStyle(.white)
@@ -295,6 +303,7 @@ struct RoutineView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(maxWidth: 70, maxHeight: 70)
+                            
                         }
                         .tint(buttonColor)
                         .background {
@@ -370,7 +379,8 @@ struct RoutineView: View {
                     //KegelView()
                     Button {
                         dismiss.callAsFunction()
-                    } label: {
+                    }
+                    label: {
                         Text("Fechar")
                             .font(.title)
                             .fontWeight(.medium)
@@ -395,5 +405,5 @@ struct RoutineView: View {
 }
 
 #Preview {
-    RoutineView(routine: Memory.routines["MORNING_KEGEL"])
+    RoutineView(routine: Memory.routines["MORNING_STRETCH"])
 }

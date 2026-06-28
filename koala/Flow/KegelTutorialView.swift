@@ -20,7 +20,8 @@ struct KegelTutorialView: View {
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .fontWeight(.bold)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.white)
+                
             }
             .clipShape(
                 RoundedRectangle(cornerRadius: 40)
@@ -48,7 +49,7 @@ struct KegelTutorialView: View {
                     .multilineTextAlignment(.center)
                     .fontWeight(.bold)
                     .padding(20)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.white)
             }
             .clipShape(
                 RoundedRectangle(cornerRadius: 40)
@@ -58,7 +59,7 @@ struct KegelTutorialView: View {
             .padding(.top)
             
             Text(
-                "Uma forma simples de fazer isso é contrair o músculo que você usaria para segurar o xixi."
+                "É o músculo que é usado quando sentimos vontade de ir ao banheiro. Esse músculo é o que deve ser contraído."
             )
             .font(.title2)
             .fontWeight(.medium)
@@ -67,15 +68,6 @@ struct KegelTutorialView: View {
             .padding(.top)
             .foregroundStyle(.kegelDark)
             
-            Text(
-                "Este músculo é o que deve ser contraído durante os exercícios."
-            )
-            .font(.title2)
-            .fontWeight(.medium)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal)
-            .padding(.top)
-            .foregroundStyle(.kegelDark)
             
             
             Spacer()
@@ -94,7 +86,7 @@ struct KegelTutorialView: View {
                     .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 32)
-                            .fill(.kegelPurple)
+                            .fill(.kegelLight)
                     )
                 
                     .padding()

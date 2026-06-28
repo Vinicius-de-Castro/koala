@@ -43,8 +43,7 @@ class Routine: Identifiable, Hashable, Equatable {
                 self.reps += move.repetitions!
             }
         }
-    }
-    
+    }    
     static func ==(lhs: Routine, rhs: Routine) -> Bool {
        return lhs.id == rhs.id
    }

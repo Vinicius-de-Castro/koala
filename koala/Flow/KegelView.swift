@@ -24,6 +24,7 @@ struct KegelView: View {
                     .fontWeight(.bold)
                     .padding(.horizontal)
                     .containerRelativeFrame(.horizontal, alignment: .leading)
+                    .foregroundStyle(Color.kegelDark)
                     
 
                 ZStack {
@@ -41,11 +42,13 @@ struct KegelView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(Color(.systemBackground))
                             .clipped()
                             .padding(.trailing)
+                            .accessibilityHidden(true)
                     }
                 }
+                .accessibilityElement(children: .combine)
                 .clipShape(
                     RoundedRectangle(cornerRadius: 24)
                 )
@@ -65,6 +68,7 @@ struct KegelView: View {
                     if Memory.routines[key]?.type == .kegel {
                         CardView(thisRoutine: Memory.routines[key]!)
                             .padding(.horizontal)
+                        
                             .onTapGesture {
                                 selectedRoutine = Memory.routines[key]
                             }

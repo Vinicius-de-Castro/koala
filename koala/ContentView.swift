@@ -30,10 +30,9 @@ struct ContentView: View {
             }
             Tab("Alongamentos", systemImage: "figure.strengthtraining.functional", value: Tabs.stretch) {
                 StretchView()
-                    .navigationTitle(Text("Teste"))
             }
         }
-        .tint(.kegelPurple)
+        .tint(.kegelDark)
     }
 }
 

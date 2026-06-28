@@ -17,9 +17,10 @@ struct DetailView: View {
     
     var body: some View {
         
-        let moveColor: Color = (routine.type == .kegel ? Color.kegelPurple : .stretchGreen)
+        let moveColor: Color = (routine.type == .kegel ? Color.kegelLight : .stretchGreen)
         
         NavigationStack {
+            
             ScrollView {
                 VStack (alignment: .leading){
                     ZStack (alignment: .bottomLeading){
@@ -32,20 +33,37 @@ struct DetailView: View {
                             .ignoresSafeArea()
                             .clipped()
                             .containerRelativeFrame(.horizontal)
+                            .accessibilityHidden(true)
+                        
                         Rectangle()
-                            .fill(LinearGradient(gradient: Gradient(colors: [.white .opacity(0), .white .opacity(0.3), .white]), startPoint: .top, endPoint: .bottom))
+                            .fill(LinearGradient(gradient: Gradient(colors: [Color("testColor") .opacity(0), Color("testColor") .opacity(0), Color("testColor")]), startPoint: .top, endPoint: .bottom))
+                        
                             .ignoresSafeArea()
+                        
+                        
+                        
                         VStack (alignment: .leading){
                             Text(routine.name)
+                                .foregroundColor(.primary)
                                 .font(.largeTitle)
                                 .fontWeight(.semibold)
                                 .padding(.horizontal)
+                                .padding(.bottom, 1)
+                            Label("Ao sinal de qualquer desconforto, pare imediatamente.", systemImage: "exclamationmark.triangle.fill")
+                             .font(.body)
+                            .fontWeight(.medium)
+                            .padding(.horizontal, 10)
+                            .padding()
+                            .foregroundColor(.primary)
+                            
+                            //TRATAMENTO DAS TAGS NA PÁGINA
                             HStack{
                                 ForEach(routine.tags, id: \.self) { tag in
                                     TagView(tag: tag, type: routine.type)
                                 }
                             }
                             .padding(.horizontal)
+                            .padding(.bottom, 0)
                         }
                     }
                     Label("Iníciar exercício", systemImage: "play.fill")
@@ -63,26 +81,19 @@ struct DetailView: View {
                             selectedRoutine = routine
                         }
                     //PARTE DE INTERAÇÃO PARA PROXIMA PAGINA
-                    Text(routine.description)
-                        .font(.body)
-                        .padding(.horizontal)
-                    Label("Respeite seu corpo. Ao sinal de qualquer desconforto, pare imediatamente.", systemImage: "exclamationmark.triangle.fill")
-                        .font(.body)
-                        .fontWeight(.medium)
-                        .padding(.horizontal)
-                    
-                    
-                    //area da descrição do exercicio
+
+//       
+                        }
                     
                 }
-            }
             .ignoresSafeArea()
+            }
             .navigationDestination(item: $selectedRoutine) { routine in
                 RoutineView(routine: routine)
-            }
+                    }
         }
     }
-}
+
 
 #Preview {
     if let routine = Memory.routines["MORNING_STRETCH"] {

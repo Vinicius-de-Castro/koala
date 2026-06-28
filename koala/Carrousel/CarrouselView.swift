@@ -15,6 +15,7 @@ struct CarrouselView: View {
                 CarrouselCard(routine: Memory.routines["MORNING_KEGEL"]!, image: "ExamplePhoto", subtitle: "Sugestão do dia", title: "Kegel Matinal", button: "Conferir exercícios")
                 CarrouselCard(routine: Memory.routines["AFTERNOON_KEGEL"]!, image: "ExamplePhoto2", subtitle: "Sugestão do dia", title: "Kegel Diário", button: "Conferir exercícios")
                 CarrouselCard(routine: Memory.routines["EVENING_KEGEL"]!, image: "ExamplePhoto3", subtitle: "Sugestão do dia", title: "Kegel Noturno", button: "Conferir exercícios")
+                  
             }
             .tabViewStyle(.page)
             .ignoresSafeArea(edges: .top)
