@@ -20,8 +20,6 @@ struct HomeView: View {
                     .padding(.horizontal)
                     .foregroundStyle(.stretchGreen)
                     .accessibilityLabel("Recomendado")
-                        
-                    
                 CardView(
                     thisRoutine: Memory.routines["MORNING_STRETCH"]!
                 )

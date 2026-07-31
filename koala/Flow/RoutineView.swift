@@ -160,7 +160,6 @@ struct RoutineView: View {
                                 .rotationEffect(.degrees(-90))
                                 .animation(.easeInOut, value: CGFloat(timerElapsed))
                             
-                            
                             Text(String(format: "%02d", displayTime%60))
                                 .foregroundStyle(textColor)
                                 .font(.system(size: 160))
@@ -179,6 +178,7 @@ struct RoutineView: View {
                         Text(currentMove!.name)
                             .font(.largeTitle)
                             .fontWeight(.bold)
+                            .padding(.vertical, 40)
                         
                         if routine!.type == .stretch {
                             Image(currentMove!.image)
@@ -198,7 +198,7 @@ struct RoutineView: View {
                                     .fill(.white)
                                     .frame(width: 120, height: 120)
                                 
-                                Text((String(format: "%02ds", displayTime)))
+                                Text((String(format: "%02d", displayTime)))
                                     .foregroundStyle(.black)
                                     .fontWeight(.bold)
                                     .font(.system(size: 30))
@@ -405,5 +405,5 @@ struct RoutineView: View {
 }
 
 #Preview {
-    RoutineView(routine: Memory.routines["MORNING_STRETCH"])
+    RoutineView(routine: Memory.routines["MORNING_KEGEL"])
 }

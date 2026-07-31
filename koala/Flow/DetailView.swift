@@ -12,7 +12,6 @@ struct DetailView: View {
     @State var routine: Routine
     
     @State private var selectedRoutine: Routine?
-    
     var screenHeight = UIScreen.main.bounds.size.height
     
     var body: some View {
@@ -37,7 +36,6 @@ struct DetailView: View {
                         
                         Rectangle()
                             .fill(LinearGradient(gradient: Gradient(colors: [Color("testColor") .opacity(0), Color("testColor") .opacity(0), Color("testColor")]), startPoint: .top, endPoint: .bottom))
-                        
                             .ignoresSafeArea()
                         
                         
@@ -48,13 +46,9 @@ struct DetailView: View {
                                 .font(.largeTitle)
                                 .fontWeight(.semibold)
                                 .padding(.horizontal)
-                                .padding(.bottom, 1)
-                            Label("Ao sinal de qualquer desconforto, pare imediatamente.", systemImage: "exclamationmark.triangle.fill")
-                             .font(.body)
-                            .fontWeight(.medium)
-                            .padding(.horizontal, 10)
-                            .padding()
-                            .foregroundColor(.primary)
+                                .padding(.bottom, 10)
+//                            Label("Ao sinal de qualquer desconforto, pare imediatamente.", systemImage: "exclamationmark.triangle.fill")
+//                               c
                             
                             //TRATAMENTO DAS TAGS NA PÁGINA
                             HStack{
@@ -80,19 +74,48 @@ struct DetailView: View {
                         .onTapGesture {
                             selectedRoutine = routine
                         }
-                    //PARTE DE INTERAÇÃO PARA PROXIMA PAGINA
-
-//       
-                        }
+                    //PARTE DE INTERAÇÃO PARA PROXIMA PAGIN
+                    //
                     
                 }
-            .ignoresSafeArea()
-            }
-            .navigationDestination(item: $selectedRoutine) { routine in
-                RoutineView(routine: routine)
+              
+                if routine.type == .stretch {
+                    HStack(alignment: .top, spacing: -13){
+                        Image(systemName: "exclamationmark.triangle.fill")
+                        
+                        Text("""
+                        Importante: Respeite seu corpo. Ao sinal de qualquer desconforto, pare imediatamente
+                    """)
+                        .foregroundStyle(Color.stretchDark)
+                        .font(.body)
+                        .padding(.vertical, 1)
+                        
                     }
+                }
+                else{
+                    HStack(alignment: .top, spacing: -13) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                        Text("""
+                        Importante: Respeite seu corpo. Ao sinal de qualquer desconforto, pare imediatamente
+                    """)
+                        .foregroundStyle(Color.kegelDark)
+                        .font(.body)
+                        .padding(.vertical, 1)
+                    }
+                   
+                }
+                if routine.type == .stretch {
+                    sequence(routine: routine)
+                }
+                
+            }
+            .ignoresSafeArea()
+        }
+        .navigationDestination(item: $selectedRoutine) { routine in
+            RoutineView(routine: routine)
         }
     }
+}
 
 
 #Preview {

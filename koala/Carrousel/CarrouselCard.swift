@@ -48,7 +48,6 @@ struct CarrouselCard: View{
                     .containerRelativeFrame(.horizontal)
                     .accessibilityHidden(true)
                 
-                
                 Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: [Color("testColor") .opacity(0), Color("testColor") .opacity(0.6), Color("testColor")]), startPoint: .top, endPoint: .bottom))
                     .ignoresSafeArea()
